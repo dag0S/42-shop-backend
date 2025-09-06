@@ -32,6 +32,7 @@ export default tseslint.config(
       "@typescript-eslint/require-await": "warn",
       "@typescript-eslint/no-unsafe-call": "warn",
       "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unsafe-assignment": "warn",
       "prettier/prettier": ["off", { endOfLine: "auto" }]
     }
   }

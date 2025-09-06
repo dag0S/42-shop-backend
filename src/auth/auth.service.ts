@@ -102,7 +102,7 @@ export class AuthService {
     return { user, ...tokens };
   }
 
-  private async getNewTokens(refreshToken: string) {
+  async getNewTokens(refreshToken: string) {
     const result: JwtPayload = await this.jwtService.verifyAsync(refreshToken);
 
     if (!result) throw new UnauthorizedException("Невалидный refresh токен");
@@ -128,7 +128,7 @@ export class AuthService {
     });
   }
 
-  private removeRefreshTokenFromResponse(res: Response) {
+  removeRefreshTokenFromResponse(res: Response) {
     res.cookie("refreshToken", "", {
       httpOnly: true,
       domain: this.configService.getOrThrow<string>("SERVER_DOMAIN"),
