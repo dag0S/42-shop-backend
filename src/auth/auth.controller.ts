@@ -3,81 +3,50 @@ import {
   Controller,
   Get,
   HttpCode,
+  HttpStatus,
   Post,
   Req,
   Res,
-  UnauthorizedException,
-  UseGuards,
-  UsePipes,
-  ValidationPipe
+  UseGuards
 } from "@nestjs/common";
 import type { Request, Response } from "express";
 import { AuthGuard } from "@nestjs/passport";
 
 import { AuthService } from "./auth.service";
-import { AuthDto } from "./dto/auth.dto";
+import type { AuthDto } from "./dto/auth.dto";
 
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UsePipes(new ValidationPipe())
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   @Post("login")
-  async login(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
-    const { refreshToken, ...response } = await this.authService.login(dto);
-
-    this.authService.addRefreshTokenToResponse(res, refreshToken);
-
-    return response;
+  async login(@Res({ passthrough: true }) res: Response, @Body() dto: AuthDto) {
+    return this.authService.login(res, dto);
   }
 
-  @UsePipes(new ValidationPipe())
-  @HttpCode(200)
   @Post("register")
+  @HttpCode(HttpStatus.CREATED)
   async register(
-    @Body() dto: AuthDto,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
+    @Body() dto: AuthDto
   ) {
-    const { refreshToken, ...response } = await this.authService.register(dto);
-
-    this.authService.addRefreshTokenToResponse(res, refreshToken);
-
-    return response;
+    return this.authService.register(res, dto);
   }
 
-  @UsePipes(new ValidationPipe())
-  @HttpCode(200)
-  @Post("login/access-token")
-  async getNewTokens(
+  @Post("refresh")
+  @HttpCode(HttpStatus.OK)
+  async refresh(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
   ) {
-    const refreshTokenFromCookie = req.cookies["refreshCookie"] as
-      | string
-      | null;
-
-    if (!refreshTokenFromCookie) {
-      this.authService.removeRefreshTokenFromResponse(res);
-
-      throw new UnauthorizedException("Refresh token не прошел");
-    }
-
-    const { refreshToken, ...response } = await this.authService.getNewTokens(
-      refreshTokenFromCookie
-    );
-
-    this.authService.addRefreshTokenToResponse(res, refreshToken);
-
-    return response;
+    return await this.authService.refresh(req, res);
   }
 
-  @HttpCode(200)
   @Post("logout")
+  @HttpCode(HttpStatus.OK)
   logout(@Res({ passthrough: true }) res: Response) {
-    this.authService.removeRefreshTokenFromResponse(res);
-
-    return true;
+    return this.authService.logout(res);
   }
 
   @Get("google")
@@ -104,7 +73,7 @@ export class AuthController {
   @UseGuards(AuthGuard("yandex"))
   async yandexAuth(@Req() _req) {}
 
-    @Get("yandex/callback")
+  @Get("yandex/callback")
   @UseGuards(AuthGuard("yandex"))
   async yandexAuthCallback(
     @Req() req: any,
