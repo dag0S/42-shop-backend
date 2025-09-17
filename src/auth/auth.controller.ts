@@ -6,14 +6,14 @@ import {
   HttpStatus,
   Post,
   Req,
-  Res,
-  UseGuards
+  Res
 } from "@nestjs/common";
 import type { Request, Response } from "express";
-import { AuthGuard } from "@nestjs/passport";
 
 import { AuthService } from "./auth.service";
-import type { AuthDto } from "./dto/auth.dto";
+import { AuthDto } from "./dto/auth.dto";
+import { GoogleAuth } from "./decorators/google-auth.decorator";
+import { YandexAuth } from "./decorators/yandex-auth.decorator";
 
 @Controller("auth")
 export class AuthController {
@@ -50,11 +50,11 @@ export class AuthController {
   }
 
   @Get("google")
-  @UseGuards(AuthGuard("google"))
+  @GoogleAuth()
   async googleAuth(@Req() _req) {}
 
   @Get("google/callback")
-  @UseGuards(AuthGuard("google"))
+  @GoogleAuth()
   async googleAuthCallback(
     @Req() req: any,
     @Res({ passthrough: true }) res: Response
@@ -70,11 +70,11 @@ export class AuthController {
   }
 
   @Get("yandex")
-  @UseGuards(AuthGuard("yandex"))
+  @YandexAuth()
   async yandexAuth(@Req() _req) {}
 
   @Get("yandex/callback")
-  @UseGuards(AuthGuard("yandex"))
+  @YandexAuth()
   async yandexAuthCallback(
     @Req() req: any,
     @Res({ passthrough: true }) res: Response
