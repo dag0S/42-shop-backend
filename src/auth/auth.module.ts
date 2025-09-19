@@ -6,7 +6,7 @@ import { PassportModule } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { AuthController } from "./auth.controller";
 import { UserModule } from "src/user/user.module";
-import { getJwtConfig } from "src/config/jwt.config";
+import { getJwtConfig } from "src/common/config/jwt.config";
 import { JwtStrategy } from "./strategies/jwt.strategy";
 import { GoogleStrategy } from "./strategies/google.strategy";
 import { YandexStrategy } from "./strategies/yandex.strategy";
