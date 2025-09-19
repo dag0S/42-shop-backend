@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { hash } from "argon2";
 
 import type { AuthDto } from "src/auth/dto/auth.dto";
@@ -32,6 +32,35 @@ export class UserService {
     });
 
     return user;
+  }
+
+  async toggleFavorite(productId: string, userId: string) {
+    const user = await this.getById(userId);
+
+    if (!user) {
+      throw new NotFoundException("Пользователь не найден");
+    }
+
+    const isExisted = user.favorites.some(
+      (product) => productId === product.id
+    );
+
+    await this.prismaService.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        favorites: {
+          [isExisted ? "disconnect" : "connect"]: {
+            id: productId
+          }
+        }
+      }
+    });
+
+    return {
+      message: "Операция прошла успешно"
+    };
   }
 
   async create(dto: AuthDto) {
