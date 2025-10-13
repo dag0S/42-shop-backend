@@ -118,12 +118,13 @@ export class AuthService {
   }
 
   private setCookie(res: Response, value: string, expires: Date) {
+    console.log(isDev(this.configService));
     res.cookie("refreshToken", value, {
       httpOnly: true,
       domain: this.COOKIE_DOMAIN,
       expires,
       secure: !isDev(this.configService),
-      sameSite: isDev(this.configService) ? "none" : "lax"
+      sameSite: isDev(this.configService) ? "lax" : "none"
     });
   }
 
