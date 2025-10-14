@@ -27,7 +27,6 @@ export class CategoryController {
 
   @Get(":categoryId")
   @HttpCode(HttpStatus.OK)
-  @JwtAuth()
   getById(@Param("categoryId") categoryId: string) {
     return this.categoryService.getById(categoryId);
   }
