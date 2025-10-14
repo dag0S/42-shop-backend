@@ -206,8 +206,7 @@ async function up() {
         ],
         categoryId: "4",
         colorId: "5",
-        storeId: store2.id,
-        userId: user.id
+        storeId: store2.id
       },
       {
         id: "5",
@@ -225,8 +224,7 @@ async function up() {
         ],
         categoryId: "2",
         colorId: "4",
-        storeId: store1.id,
-        userId: user.id
+        storeId: store1.id
       },
       {
         id: "6",
@@ -244,8 +242,7 @@ async function up() {
         ],
         categoryId: "3",
         colorId: "4",
-        storeId: store1.id,
-        userId: user.id
+        storeId: store1.id
       },
       {
         id: "7",
@@ -264,8 +261,7 @@ async function up() {
         ],
         categoryId: "4",
         colorId: "5",
-        storeId: store2.id,
-        userId: user.id
+        storeId: store2.id
       },
       {
         id: "8",
@@ -303,8 +299,7 @@ async function up() {
         ],
         categoryId: "4",
         colorId: "5",
-        storeId: store2.id,
-        userId: user.id
+        storeId: store2.id
       },
       {
         id: "10",
@@ -319,8 +314,7 @@ async function up() {
         images: ["/uploads/products/htfnd5wl0crr1mf13azsvnx0.webp"],
         categoryId: "4",
         colorId: "5",
-        storeId: store2.id,
-        userId: user.id
+        storeId: store2.id
       }
     ]
   });
