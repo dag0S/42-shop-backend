@@ -255,9 +255,9 @@ async function up() {
 Отправляем в течение недели с момента заказа`,
         price: 3200,
         images: [
-          "/uploads/products/u84y7wlv8mijfvgzvjjo3kjr.webp",
-          "/uploads/products/ehq063g3jgpbhlrxf86ab02c.webp",
-          "/uploads/products/aw9627j34w0xiqtpy4ggtjem.webp"
+          "/uploads/products/aapecg176q7voyffq4glwh8l.webp",
+          "/uploads/products/j5ndc8xwx3kwnrnevx7qz0rb.webp",
+          "/uploads/products/tyt6lahvm0115ng9waoycijr.webp"
         ],
         categoryId: "4",
         colorId: "5",
